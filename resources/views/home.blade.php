@@ -1,55 +1,46 @@
-<x-layout>
-    <x-slot:title>
-        Home Feed
-    </x-slot:title>
+@extends('layouts.base')
 
-    <div class="max-w-2xl mx-auto">
-        <h1 class="text-3xl font-bold mt-8">Latest Chirps</h1>
+@section('title', 'Home Feed')
+
+@section('breadcrumbs')
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li>ホーム</li>
+        </ul>
+    </nav>
+@endsection
+
+@section('content')
+    <div>
+        <h1>Latest Chirps</h1>
 
         <!-- Chirp Form -->
-        <div class="card bg-base-100 shadow mt-8">
-            <div class="card-body">
-                <form method="POST" action="/chirps">
-                    @csrf
-                    <div class="form-control w-full">
-                        <textarea name="message" placeholder="What's on your mind?"
-                            class="textarea textarea-bordered w-full resize-none @error('message') textarea-error @enderror" rows="4"
-                            maxlength="255" required>{{ old('message') }}</textarea>
+        <article style="margin-top: 2rem;">
+            <form method="POST" action="/chirps">
+                @csrf
+                <fieldset>
+                    <label>
+                        What's on your mind?
+                        <textarea name="message" rows="3" maxlength="255" required>{{ old('message') }}</textarea>
+                    </label>
+                    @error('message')
+                        <small style="color: red;">{{ $message }}</small>
+                    @enderror
+                </fieldset>
+                <button type="submit">Chirp</button>
+            </form>
+        </article>
 
-                        @error('message')
-                            <div class="label">
-                                <span class="label-text-alt text-error">{{ $message }}</span>
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="mt-4 flex items-center justify-end">
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            Chirp
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
         <!-- Feed -->
-        <div class="space-y-4 mt-8">
+        <div style="margin-top: 2rem;">
             @forelse ($chirps as $chirp)
-                <x-chirp :chirp="$chirp" />
+                <article>
+                    <p>{{ $chirp->message }}</p>
+                    <small>{{ $chirp->created_at->diffForHumans() }}</small>
+                </article>
             @empty
-                <div class="hero py-12">
-                    <div class="hero-content text-center">
-                        <div>
-                            <svg class="mx-auto h-12 w-12 opacity-30" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
-                                </path>
-                            </svg>
-                            <p class="mt-4 text-base-content/60">No chirps yet. Be the first to chirp!</p>
-                        </div>
-                    </div>
-                </div>
+                <p style="text-align: center; color: gray;">No chirps yet. Be the first to chirp!</p>
             @endforelse
         </div>
     </div>
-</x-layout>
+@endsection

@@ -2,6 +2,15 @@
 
 @section('title', $news->title)
 
+@section('breadcrumbs')
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li><a href="/">ホーム</a></li>
+            <li>お知らせ詳細</li>
+        </ul>
+    </nav>
+@endsection
+
 @section('content')
 
     <div class="news-detail">

@@ -2,8 +2,15 @@
 
 @section('title', '商品一覧')
 
-@section('content')
+@section('breadcrumbs')
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li>ホーム</li>
+        </ul>
+    </nav>
+@endsection
 
+@section('content')
     {{-- カテゴリ一覧 --}}
     <h3>カテゴリ</h3>
     <ul>
@@ -41,7 +48,7 @@
             <li>
                 <a href="/products/{{ $product->id }}">
                     {{ $product['name'] }}
-                    <img src="{{ $product->imageUrl() }}" width="200">
+                    <img src="{{ $product->imageUrl() }}" width="200" alt="{{ $product['name'] }}">
                 </a>
             </li>
         </ul>
@@ -54,19 +61,15 @@
     <div class="news-list">
         @foreach ($news as $item)
             <div class="news-item">
-
                 <h4 class="news-item-title">
                     <a href="/news/{{ $item->id }}">
                         {{ $item->title }}
                     </a>
                 </h4>
-
                 <p class="news-item-body">
                     {!! $item->content !!}
                 </p>
-
             </div>
         @endforeach
     </div>
-
 @endsection
