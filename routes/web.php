@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ReviewController;
 
 // Route::inertia('/', 'welcome', [
 //     'canRegister' => Features::enabled(Features::registration()),
@@ -32,7 +33,8 @@ Route::get('/', [ProductController::class, 'index']);
 Route::get(
     '/products/{product}',
     [ProductController::class, 'show']
-);
+)->name('products.show');
+
 Route::post(
     '/cart',
     [CartController::class, 'store']
@@ -73,5 +75,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get(
         '/mypage',
         [MyPageController::class, 'index']
+    );
+
+    // レビュー投稿用ルート（購入者のみ）
+    Route::post(
+        '/products/{product}/reviews',
+        [ReviewController::class, 'store']
     );
 });
