@@ -12,8 +12,22 @@
 @endsection
 
 @section('content')
-    <h2>マイページ</h2>
-    <ul>
-        <li><a href="/orders">注文履歴を見る</a></li>
-    </ul>
+    <h1>マイページ</h1>
+    <p>ようこそ、{{ $user->name }}さん！</p>
+
+    <h2>お気に入り商品</h2>
+    @if ($favoriteProducts->isEmpty())
+        <p>お気に入り登録している商品はありません。</p>
+    @else
+        <ul>
+            @foreach ($favoriteProducts as $product)
+                <li>
+                    <a href="/products/{{ $product->id }}">{{ $product->name }}</a> （{{ number_format($product->price) }}円）
+                </li>
+            @endforeach
+        </ul>
+    @endif
+
+    <h2>注文履歴</h2>
+    <p><a href="/orders">注文履歴一覧を見る</a></p>
 @endsection

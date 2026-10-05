@@ -8,6 +8,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\FavoriteController;
 
 // Route::inertia('/', 'welcome', [
 //     'canRegister' => Features::enabled(Features::registration()),
@@ -32,7 +34,8 @@ Route::get('/', [ProductController::class, 'index']);
 Route::get(
     '/products/{product}',
     [ProductController::class, 'show']
-);
+)->name('products.show');
+
 Route::post(
     '/cart',
     [CartController::class, 'store']
@@ -74,4 +77,16 @@ Route::middleware(['auth'])->group(function () {
         '/mypage',
         [MyPageController::class, 'index']
     );
+
+    // レビュー投稿用ルート（購入者のみ）
+    Route::post(
+        '/products/{product}/reviews',
+        [ReviewController::class, 'store']
+    );
+
+// お気に入り追加・解除ルート
+    Route::post(
+        '/products/{product}/favorite',
+        [FavoriteController::class, 'toggle']
+    )->name('products.favorite');
 });
