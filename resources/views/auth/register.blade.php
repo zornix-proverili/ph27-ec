@@ -2,6 +2,15 @@
 
 @section('title', '会員登録')
 
+@section('breadcrumbs')
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li><a href="/">ホーム</a></li>
+            <li>会員登録</li>
+        </ul>
+    </nav>
+@endsection
+
 @section('content')
     <h1>会員登録</h1>
     @if ($errors->any())
@@ -9,10 +18,12 @@
             <article>{{ $error }}</article>
         @endforeach
     @endif
-    <form action="{{ route('register.store') }}" method="post">
+
+    <form action="{{ route('register.store') }}" method="POST">
+        @csrf
         <div>
             名前:
-            <input type="text" name="name">
+            <input type="text" name="name" value="{{ old('name') }}">
         </div>
         <div>
             メールアドレス:

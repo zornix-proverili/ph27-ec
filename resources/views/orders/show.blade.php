@@ -2,6 +2,17 @@
 
 @section('title', '注文詳細')
 
+@section('breadcrumbs')
+    <nav aria-label="breadcrumb">
+        <ul>
+            <li><a href="/">ホーム</a></li>
+            <li><a href="/mypage">マイページ</a></li>
+            <li><a href="/orders">注文履歴</a></li>
+            <li>注文詳細</li>
+        </ul>
+    </nav>
+@endsection
+
 @section('content')
     <h1>注文ID: {{ $order->id }}</h1>
     <p>注文日時: {{ $order->created_at->format('Y/m/d H:i') }}</p>
